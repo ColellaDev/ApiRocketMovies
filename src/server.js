@@ -1,5 +1,6 @@
 require("express-async-errors")
 const AppError = require("./utils/AppError")
+const uploadConfig = require("./configs/upload")
 
 const express = require("express"); //Importa o Express
 const database = require("./database/sqlite/index") // importando o Sqlite
@@ -8,6 +9,8 @@ const cors = require("cors")
 const app = express(); //Cria a aplicação Express
 app.use(cors())
 app.use(express.json()) //Define o Json como padrão para o Express
+
+app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
 
 database()
 

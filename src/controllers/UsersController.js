@@ -1,5 +1,5 @@
 const { hash, compare} = require("bcryptjs")
-const AppError = require("../AppError")
+const AppError = require("../utils/AppError")
 const knex = require("../database/knex")
 
 class UsersController {
@@ -26,7 +26,7 @@ class UsersController {
 
     async update (request, response) {
         const { name, email, avatar, password, old_password} = request.body
-        const { id } =  request.params
+        const id = request.user.id
         
         const user = await knex("users").where({id}).first()
 

@@ -1,5 +1,5 @@
 require("express-async-errors")
-const AppError = require("./AppError")
+const AppError = require("./utils/AppError")
 
 const express = require("express"); //Importa o Express
 const database = require("./database/sqlite/index") // importando o Sqlite

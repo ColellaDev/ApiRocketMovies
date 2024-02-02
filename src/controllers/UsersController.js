@@ -32,7 +32,7 @@ class UsersController {
 
         if(email){
             await knex("users").first().where("email", email).then((checkEmailExists) => {
-                if(checkEmailExists) {
+                if(checkEmailExists && checkEmailExists.id !== user.id) {
                     throw new AppError("Esse E-mail já está em uso")
                 }
             })

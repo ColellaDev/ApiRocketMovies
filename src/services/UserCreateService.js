@@ -20,7 +20,9 @@ class UserCreateService {
         
         const hashedPassword = await hash(password, 8)
 
-        await this.userRepository.create({name, email, password:hashedPassword, avatar})
+        const userCreated = await this.userRepository.create({name, email, password:hashedPassword, avatar})
+
+        return userCreated
     }
 }
 

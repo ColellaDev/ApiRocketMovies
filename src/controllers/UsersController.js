@@ -3,6 +3,7 @@ const AppError = require("../utils/AppError")
 const knex = require("../database/knex")
 
 const UserRepository = require("../repositories/UserRepository")
+const UserCreateService = require("../services/UserCreateService")
 
 class UsersController {
 
@@ -10,21 +11,9 @@ class UsersController {
         const {name, email, password, avatar} = request.body //Faz a requisição pelo Corpo
 
         const userRepository = new UserRepository()
-
-        if(!name){
-            throw new AppError("Nome é obrigatório!")
-        }
+        const userCreateService = new UserCreateService(userRepository)
+        await userCreateService.execute({name, email, password, avatar})
         
-        const checkEmailExists = await userRepository.findByEmail(email)
-
-            if(checkEmailExists) {
-                throw new AppError("Esse E-mail já está em uso")
-            }
-        
-        const hashedPassword = await hash(password, 8)
-
-        await userRepository.create({name, email, password:hashedPassword, avatar})
-
         response.json()
     }
 
